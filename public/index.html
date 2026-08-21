@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="GeoStream Core real-time well logging operations terminal"
+    />
+    <title>GeoStream Core // Real-time Logging Operations</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-info">
+        <h1>GEOSTREAM CORE // OPERATIONS TERMINAL</h1>
+        <p class="asset-stream">
+          Asset Stream: OMU-04_ST1 // Realtime Telemetry Feed
+        </p>
+      </div>
+      <div class="status-tag" id="connection-status" aria-live="polite">
+        <span class="status-indicator" aria-hidden="true">📡</span>
+        <span class="status-text">LIVE STREAM CONNECTION STABLE</span>
+      </div>
+    </header>
+
+    <section class="telemetry-grid" aria-label="Well telemetry KPIs">
+      <div class="kpi-card" id="card-md" data-metric="measured-depth">
+        <span class="kpi-label">Measured Depth</span>
+        <span class="value" id="val-md">--.--</span>
+        <span class="unit">ft</span>
+      </div>
+      <div class="kpi-card" id="card-tvdss" data-metric="tvdss">
+        <span class="kpi-label">Corrected TVDSS</span>
+        <span class="value" id="val-tvdss">--.--</span>
+        <span class="unit">ft</span>
+      </div>
+      <div class="kpi-card" id="card-gr" data-metric="gamma-ray">
+        <span class="kpi-label">Gamma Ray</span>
+        <span class="value" id="val-gr">--.--</span>
+        <span class="unit">API</span>
+      </div>
+      <div class="kpi-card" id="card-resistivity" data-metric="resistivity">
+        <span class="kpi-label">Resistivity</span>
+        <span class="value" id="val-resistivity">--.--</span>
+        <span class="unit">ohm-m</span>
+      </div>
+      <div class="kpi-card" id="card-lith" data-metric="lithology">
+        <span class="kpi-label">Target Lithology</span>
+        <span class="value" id="val-lith">WAITING</span>
+      </div>
+    </section>
+
+    <section class="console-layout">
+      <div class="pane">
+        <div class="pane-title">
+          Subsurface Track Viewer (Track 1: GR | Track 2: Resistivity)
+        </div>
+        <div
+          class="log-canvas-container"
+          id="log-canvas"
+          aria-label="Well log visualization"
+        ></div>
+      </div>
+      <div class="pane">
+        <div class="pane-title">
+          Log Logic Stream / Operational Terminal Ticker
+        </div>
+        <div
+          class="ticker-stream"
+          id="ticker-box"
+          aria-live="polite"
+          aria-label="Operational ticker"
+        ></div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        &copy; <span id="current-year"></span> GeoStream Core Operations
+        Terminal
+      </p>
+    </footer>
+    <script>
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+    </script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/js/dashboard.js" defer></script>
+  </body>
+</html>

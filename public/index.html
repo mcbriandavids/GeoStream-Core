@@ -28,24 +28,41 @@
     <section class="telemetry-grid" aria-label="Well telemetry KPIs">
       <div class="kpi-card" id="card-md" data-metric="measured-depth">
         <span class="kpi-label">Measured Depth</span>
-        <span class="value" id="val-md">--.--</span>
-        <span class="unit">ft</span>
+        <span class="value" id="md-val">--.--</span>
+        <span class="unit">m</span>
       </div>
       <div class="kpi-card" id="card-tvdss" data-metric="tvdss">
         <span class="kpi-label">Corrected TVDSS</span>
-        <span class="value" id="val-tvdss">--.--</span>
-        <span class="unit">ft</span>
+        <span class="value" id="tvdss-val">--.--</span>
+        <span class="unit">m</span>
       </div>
       <div class="kpi-card" id="card-gr" data-metric="gamma-ray">
         <span class="kpi-label">Gamma Ray</span>
-        <span class="value" id="val-gr">--.--</span>
+        <span class="value" id="gr-val">--.--</span>
         <span class="unit">API</span>
       </div>
       <div class="kpi-card" id="card-resistivity" data-metric="resistivity">
         <span class="kpi-label">Resistivity</span>
-        <span class="value" id="val-resistivity">--.--</span>
+        <span class="value" id="res-val">--.--</span>
         <span class="unit">ohm-m</span>
       </div>
+
+      <div class="kpi-card" id="card-nphi" data-metric="neutron-porosity">
+        <span class="kpi-label">Neutron Porosity</span>
+        <span class="value" id="nphi-val">--.--</span>
+        <span class="unit">v/v</span>
+      </div>
+      <div class="kpi-card" id="card-rhob" data-metric="bulk-density">
+        <span class="kpi-label">Bulk Density</span>
+        <span class="value" id="rhob-val">--.--</span>
+        <span class="unit">g/cc</span>
+      </div>
+      <div class="kpi-card" id="card-dt" data-metric="sonic-transit">
+        <span class="kpi-label">Sonic (DT)</span>
+        <span class="value" id="dt-val">--.--</span>
+        <span class="unit">µs/ft</span>
+      </div>
+
       <div class="kpi-card" id="card-lith" data-metric="lithology">
         <span class="kpi-label">Target Lithology</span>
         <span class="value" id="val-lith">WAITING</span>
@@ -53,27 +70,53 @@
     </section>
 
     <section class="console-layout">
+      <!-- UPDATE: Replaced the old list grid container with standard-spaced canvas column headers and tracking lanes -->
       <div class="pane">
         <div class="pane-title">
-          Subsurface Track Viewer (Track 1: GR | Track 2: Resistivity)
+          Subsurface Track Viewer // Continuous Wiggle Profiler
         </div>
+
+        <!-- Continuous Wiggle Track Alignment Headers Box Grid -->
+        <div class="track-headers-grid">
+          <div class="header-lbl">Depth</div>
+          <div class="header-lbl gr-lbl">Track 1: GR</div>
+          <div class="header-lbl res-lbl">Track 2: RES</div>
+          <div class="header-lbl nphi-lbl">Track 3: NPHI</div>
+          <div class="header-lbl rhob-lbl">Track 4: RHOB</div>
+          <div class="header-lbl sonic-lbl">Track 5: DT</div>
+          <div class="header-lbl crossover-lbl">Track 6: NPHI/RHOB X-OVER</div>
+        </div>
+
+        <!-- Master Low-Latency Canvas Context Layout Layer -->
         <div
           class="log-canvas-container"
-          id="log-canvas"
-          aria-label="Well log visualization"
-        ></div>
+          style="position: relative; background: #060911; flex-grow: 1"
+        >
+          <canvas
+            id="subsurface-wiggle-canvas"
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+            "
+          ></canvas>
+        </div>
       </div>
+      <!-- 
       <div class="pane">
         <div class="pane-title">
           Log Logic Stream / Operational Terminal Ticker
         </div>
         <div
           class="ticker-stream"
-          id="ticker-box"
+          id="terminal-ticker"
           aria-live="polite"
           aria-label="Operational ticker"
         ></div>
-      </div>
+      </div> -->
+      <!-- Live operational updates prepend here via dashboard.js -->
     </section>
 
     <footer>

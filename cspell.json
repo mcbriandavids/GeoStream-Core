@@ -1,0 +1,18 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "wellbore",
+    "subsea",
+    "tvdss",
+    "petrophysical",
+    "NPHI",
+    "RHOB",
+    "minmax",
+    "rgba",
+    "geotype"
+  ],
+  "ignorePaths": [
+    "node_modules/**"
+  ]
+}

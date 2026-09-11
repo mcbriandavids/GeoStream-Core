@@ -1,23 +1,36 @@
 :root {
   --bg-main: #0b0f19;
   --bg-card: #151d30;
+
+  /* Subsurface Geological Color Matrix */
   --accent-sand: #f5c453;
   --accent-shale: #4a607a;
+  --accent-pay: #10b981; /* Premium Hydrocarbon Green */
+
+  /* Curve Tracking Channels */
+  --color-gr: #3b5998; /* Gamma Ray Blue */
+  --color-res: #f0ad4e; /* Resistivity Amber */
+  --color-porosity: #a78bfa; /* Neutron Porosity Purple */
+  --color-sonic: #ef4444; /* Acoustic Sonic Red */
+
   --border-color: #24324f;
   --text-bright: #f3f4f6;
   --text-muted: #9ca3af;
 }
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: "Courier New", Courier, monospace;
 }
+
 body {
   background: var(--bg-main);
   color: var(--text-bright);
   padding: 20px;
 }
+
 header {
   display: flex;
   justify-content: space-between;
@@ -26,10 +39,18 @@ header {
   border-bottom: 2px solid var(--border-color);
   margin-bottom: 20px;
 }
+
 header h1 {
   font-size: 1.5rem;
   color: var(--accent-sand);
 }
+
+.asset-stream {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
 .status-tag {
   background: #064e3b;
   border: 1px solid #059669;
@@ -39,44 +60,80 @@ header h1 {
   border-radius: 4px;
   font-weight: bold;
 }
+
+/* =========================================================================
+   KPI TELEMETRY GRID MODIFICATIONS (SCALED TO FIT 8 TRACK CARDS)
+   ========================================================================= */
 .telemetry-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
   margin-bottom: 25px;
 }
+
 .kpi-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  padding: 15px;
+  padding: 12px 15px;
   border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
 }
-.kpi-card.active-sand {
-  border-left: 4px solid var(--accent-sand);
+
+.kpi-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
 }
-.kpi-card.active-shale {
-  border-left: 4px solid var(--accent-shale);
+
+.kpi-card .value {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--text-bright);
 }
-.kpi-card label {
+
+.kpi-card .unit {
   font-size: 0.75rem;
   color: var(--text-muted);
-  display: block;
-  margin-bottom: 5px;
+  margin-left: 2px;
 }
-.kpi-card .value {
-  font-size: 1.8rem;
-  font-weight: bold;
+
+/* Dynamic Left Indicator Border Adjustments */
+#card-gr {
+  border-left: 3px solid var(--color-gr);
 }
-.kpi-card .unit {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-left: 4px;
+#card-resistivity {
+  border-left: 3px solid var(--color-res);
 }
+#card-nphi {
+  border-left: 3px solid var(--color-porosity);
+}
+#card-rhob {
+  border-left: 3px solid var(--text-muted);
+}
+#card-dt {
+  border-left: 3px solid var(--color-sonic);
+}
+
+/* =========================================================================
+   CONSOLE WORKSPACE LAYOUT
+   ========================================================================= */
+/* .console-layout {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;
+  gap: 20px;
+  height: 550px;
+} */
 .console-layout {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  /* Change from '2.2fr 1fr' to '1fr' to take up full available width */
+  grid-template-columns: 1fr;
   gap: 20px;
-  height: 500px;
+  height: 550px;
 }
 .pane {
   background: var(--bg-card);
@@ -86,47 +143,115 @@ header h1 {
   flex-direction: column;
   overflow: hidden;
 }
+
 .pane-title {
   background: #1e293b;
   padding: 10px 15px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: bold;
   color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
 }
+
 .log-canvas-container {
   padding: 15px;
   flex-grow: 1;
   overflow-y: auto;
   display: flex;
-  flex-direction: column-reverse;
-  gap: 4px;
+  flex-direction: column; /* Normal tracking stack direction */
+  gap: 6px;
+  background: #080c14;
 }
-.log-row {
+
+/* =========================================================================
+   MULTI-TRACK LOGGING VIEW GRID
+   ========================================================================= */
+.log-row-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr 1fr;
-  gap: 10px;
-  padding: 8px;
-  border-radius: 4px;
-  font-size: 0.85rem;
+  grid-template-columns: 85px 1fr 1fr 1fr 1fr 100px;
+  gap: 12px;
   align-items: center;
-  background: rgba(255, 255, 255, 0.02);
+  padding: 6px 10px;
+  background: rgba(21, 29, 48, 0.4);
+  border: 1px solid rgba(36, 50, 79, 0.3);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
 }
-.bar-track {
+
+.depth-label {
+  color: var(--text-muted);
+  font-weight: bold;
+}
+
+.track-lane {
   background: #0b0f19;
   height: 16px;
   border-radius: 3px;
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
-.bar-fill {
+
+/* Re-usable Curve Fill Blueprints */
+.log-bar-fill {
   height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.sand-fill {
-  background: var(--accent-sand);
+
+.gr-bar {
+  background-color: var(--color-gr);
 }
-.shale-fill {
-  background: var(--accent-shale);
+.resistivity-bar {
+  background-color: var(--color-res);
 }
+.porosity-bar {
+  background-color: var(--color-porosity);
+}
+.sonic-bar {
+  background-color: var(--color-sonic);
+}
+
+/* =========================================================================
+   LITHOLOGY LABELS AND PAY-SAND REAL-TIME BREAKOUT STRATEGIES
+   ========================================================================= */
+.lithology-tag {
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 3px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+/* Geotype Class Rules */
+.tag-shale {
+  background: rgba(74, 96, 122, 0.2);
+  color: #93c5fd;
+  border: 1px solid var(--accent-shale);
+}
+.tag-sand {
+  background: rgba(245, 196, 83, 0.2);
+  color: #fde047;
+  border: 1px solid var(--accent-sand);
+}
+.tag-pay-sand {
+  background: rgba(16, 185, 129, 0.25);
+  color: #34d399;
+  border: 1px solid var(--accent-pay);
+  animation: pulseAlert 2s infinite;
+}
+
+/* Dynamic Row Outlines when tool hits target Payload */
+.lithology-row-pay-sand {
+  border: 1px solid rgba(16, 185, 129, 0.6);
+  background: rgba(16, 185, 129, 0.06);
+}
+
+/* =========================================================================
+   OPERATIONAL RUNNING TERMINAL SCREEN TICKER
+   ========================================================================= */
 .ticker-stream {
   padding: 15px;
   flex-grow: 1;
@@ -134,10 +259,83 @@ header h1 {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #34d399;
+  background: #060911;
 }
-.ticker-line {
+
+.terminal-line {
   border-left: 2px solid #059669;
   padding-left: 8px;
+  line-height: 1.4;
+}
+
+.terminal-alert {
+  border-left: 2px solid var(--accent-pay);
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 4px 8px;
+  border-radius: 0 4px 4px 0;
+  font-weight: bold;
+}
+
+/* Target alert animation framework for pay zones */
+@keyframes pulseAlert {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+footer {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+/* Align track header boxes directly over our structured canvas trace lanes */
+.track-headers-grid {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr 1.2fr;
+  gap: 10px;
+  background: #111827;
+  padding: 8px 15px;
+  font-size: 0.65rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-lbl {
+  text-align: center;
+  color: var(--text-muted);
+}
+.gr-lbl {
+  color: var(--color-gr);
+}
+.res-lbl {
+  color: var(--color-res);
+}
+.nphi-lbl {
+  color: var(--color-porosity);
+}
+.rhob-lbl {
+  color: #e2e8f0;
+}
+.sonic-lbl {
+  color: var(--color-sonic);
+}
+.crossover-lbl {
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 2px;
+  background: rgba(16, 185, 129, 0.05);
 }
